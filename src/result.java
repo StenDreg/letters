@@ -1,14 +1,14 @@
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import static java.nio.file.Files.lines;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
@@ -95,28 +95,35 @@ public class result extends javax.swing.JFrame {
 
             java.io.File file = fileChooser.getSelectedFile();
             
-            
+                fileChooser.setSelectedFile(new File("output.csv"));
                 int saveReturn = fileChooser.showSaveDialog(this);
                 if (saveReturn == javax.swing.JFileChooser.APPROVE_OPTION) {
-                BufferedReader in = null;
+                BufferedReader in;
                 java.io.File saveFile = fileChooser.getSelectedFile();
                 try {
                     in = new BufferedReader(new FileReader(file));
                 } catch (FileNotFoundException ex) {
                     Logger.getLogger(result.class.getName()).log(Level.SEVERE, null, ex);
+                    return;
                 }
                 
                 
                 BufferedWriter bw;
-                try (FileWriter writer = new FileWriter(saveFile)) {
+                try (FileWriter writer = new FileWriter(saveFile, true)) {
                     bw = new BufferedWriter(writer);
-                    
                     
                     
                     in.lines().forEach((line) -> {
                         String[] data = line.split(";");
-                        try {            
-                            bw.append(line);
+                        try {
+                            for (int i = 0; i < data.length; i++) {
+                                String column = data[i];
+                                bw.append(column);
+                                if (i > data.length) {
+                                    System.out.println("Tähed" + i + " : " + data[i]);
+                                }
+                            }
+                            bw.append(System.lineSeparator());
                         } catch (IOException ex) {
                             Logger.getLogger(result.class.getName()).log(Level.SEVERE, null, ex);
                         }
@@ -144,7 +151,6 @@ public class result extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
