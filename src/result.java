@@ -119,9 +119,7 @@ public class result extends javax.swing.JFrame {
                             for (int i = 0; i < data.length; i++) {
                                 String column = data[i];
                                 bw.append(column);
-                                if (i > data.length) {
-                                    System.out.println("Tähed" + i + " : " + data[i]);
-                                }
+                               
                             }
                             bw.append(System.lineSeparator());
                         } catch (IOException ex) {
