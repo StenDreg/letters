@@ -119,6 +119,9 @@ public class result extends javax.swing.JFrame {
                                 if (regex.matcher(column).matches()) {
                                     bw.append(column);
                                 }
+                                if (i < data.length) {
+                                    bw.append(";");
+                                }
 
                             }
                             bw.append(System.lineSeparator());
