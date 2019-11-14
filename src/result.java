@@ -6,9 +6,9 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import static java.nio.file.Files.lines;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Pattern;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
@@ -23,7 +23,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  */
 public class result extends javax.swing.JFrame {
 
-    static String regex = ("^[a-zA-Z]*$");
+    static Pattern regex = Pattern.compile("^[a-zA-Z]*$");
 
     /**
      * Creates new form result
@@ -90,14 +90,14 @@ public class result extends javax.swing.JFrame {
         fileChooser.addChoosableFileFilter(ft2);
 
         int returnVal = fileChooser.showOpenDialog(this);
-        
+
         if (returnVal == javax.swing.JFileChooser.APPROVE_OPTION) {
 
             java.io.File file = fileChooser.getSelectedFile();
-            
-                fileChooser.setSelectedFile(new File("output.csv"));
-                int saveReturn = fileChooser.showSaveDialog(this);
-                if (saveReturn == javax.swing.JFileChooser.APPROVE_OPTION) {
+
+            fileChooser.setSelectedFile(new File("output.csv"));
+            int saveReturn = fileChooser.showSaveDialog(this);
+            if (saveReturn == javax.swing.JFileChooser.APPROVE_OPTION) {
                 BufferedReader in;
                 java.io.File saveFile = fileChooser.getSelectedFile();
                 try {
@@ -106,42 +106,41 @@ public class result extends javax.swing.JFrame {
                     Logger.getLogger(result.class.getName()).log(Level.SEVERE, null, ex);
                     return;
                 }
-                
-                
+
                 BufferedWriter bw;
                 try (FileWriter writer = new FileWriter(saveFile, true)) {
                     bw = new BufferedWriter(writer);
-                    
-                    
+
                     in.lines().forEach((line) -> {
                         String[] data = line.split(";");
                         try {
                             for (int i = 0; i < data.length; i++) {
                                 String column = data[i];
-                                bw.append(column);
-                               
+                                if (regex.matcher(column).matches()) {
+                                    bw.append(column);
+                                }
+
                             }
                             bw.append(System.lineSeparator());
                         } catch (IOException ex) {
                             Logger.getLogger(result.class.getName()).log(Level.SEVERE, null, ex);
                         }
-                        
-                    });
-                    bw.close();
-                
 
-            } catch (FileNotFoundException ex) {
-                Logger.getLogger(result.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (IOException ex) {
-                Logger.getLogger(result.class.getName()).log(Level.SEVERE, null, ex);
-            } finally {
-                try {
-                    in.close();
+                    });
+                    writer.close();
+
+                } catch (FileNotFoundException ex) {
+                    Logger.getLogger(result.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (IOException ex) {
                     Logger.getLogger(result.class.getName()).log(Level.SEVERE, null, ex);
+                } finally {
+                    try {
+                        in.close();
+                    } catch (IOException ex) {
+                        Logger.getLogger(result.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
             }
-        }
         }
     }//GEN-LAST:event_OpencsvActionPerformed
 
