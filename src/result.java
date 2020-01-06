@@ -114,9 +114,14 @@ public class result extends javax.swing.JFrame {
                     in.lines().forEach((line) -> {
                         String[] data = line.split(";");
                         try {
+                            boolean isFirstWritten = false;
                             for (int i = 0; i < data.length; i++) {
                                 String column = data[i];
                                 if (regex.matcher(column).matches()) {
+                                    if(!isFirstWritten && i < data.length) {
+                                        bw.append(";");
+                                    }
+                                    isFirstWritten = true;
                                     bw.append(column);
                                 }
                                 if (i < data.length) {

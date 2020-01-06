@@ -1,0 +1,13 @@
+﻿See Testiplaan on Mõeldud Töö "Letters"
+Ülesanne 5.
+
+	1. Dokumenti eesmark on olla Testiplaan
+	
+	2. Projekti ulatus on teatud CSV faili filtreerida ja Salvestada 
+		
+	3. Testitavad objektid on CSVfail.
+	
+	4. Testimise meetodid on Faili avamine, näidata ainult tähte ja salvestada uute faili
+
+	5. Lõpptulemus oleks Koolonid oleks alles aga Filtreerib küll tähti nagu eesmärgil
+	

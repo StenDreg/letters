@@ -1,0 +1,17 @@
+﻿Kasutuslugu: Programm Letters
+
+Ülesanne 5
+
+
+	Kirjeldus: Väljastab ainult tähti
+
+	Käsutaja(d): Isik, kellel on olemas programm
+
+	Põhisündmused:
+			1) Programmi avamine
+			2) Programmi Salvestamine teise nimega
+
+
+	Eeltingimused: Fail on õiges kohas
+
+	Järeltingimused: Programmi tulemust näitab kohe pärast salvestamist.
