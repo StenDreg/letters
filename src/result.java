@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
@@ -110,7 +111,6 @@ public class result extends javax.swing.JFrame {
                 BufferedWriter bw;
                 try (FileWriter writer = new FileWriter(saveFile, true)) {
                     bw = new BufferedWriter(writer);
-
                     in.lines().forEach((line) -> {
                         String[] data = line.split(";");
                         try {
@@ -118,22 +118,18 @@ public class result extends javax.swing.JFrame {
                             for (int i = 0; i < data.length; i++) {
                                 String column = data[i];
                                 if (regex.matcher(column).matches()) {
-                                    if(!isFirstWritten && i < data.length) {
-                                        bw.append(";");
-                                    }
+                                    if(!isFirstWritten && i < data.length) { 
                                     isFirstWritten = true;
                                     bw.append(column);
                                 }
-                                if (i < data.length) {
-                                    bw.append(";");
+                                    bw.append(" ");
+                                    
                                 }
-
                             }
                             bw.append(System.lineSeparator());
                         } catch (IOException ex) {
                             Logger.getLogger(result.class.getName()).log(Level.SEVERE, null, ex);
                         }
-
                     });
                     writer.close();
 
@@ -148,7 +144,9 @@ public class result extends javax.swing.JFrame {
                         Logger.getLogger(result.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
+                
             }
+                            
         }
     }//GEN-LAST:event_OpencsvActionPerformed
 
